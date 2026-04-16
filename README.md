@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Private DeFi Liquidity Pools via ZK-SNARKs
 
 A capstone-ready project starter for building **privacy-preserving DeFi liquidity pools** where LP positions, allocations, and entry/exit details are hidden using ZK-SNARK proofs.
@@ -102,3 +103,6 @@ No direct link between deposit address and withdrawal address is revealed in pla
 - This starter is educational and not production-ready.
 - Circuit currently uses an educational placeholder hash. Replace with Poseidon before publishing results.
 - Always perform formal audits before mainnet deployment.
+=======
+# Private-DeFi-Liquidity-Pool
+>>>>>>> a947be31b481ebdff3517c288f5a3116dd0ffef8
