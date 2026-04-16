@@ -1,0 +1,17 @@
+node_modules
+dist
+build
+.env
+.env.*
+coverage
+artifacts
+cache
+typechain-types
+*.r1cs
+*.wasm
+*.zkey
+!frontend/public/zk/private_lp.wasm
+!frontend/public/zk/private_lp_final.zkey
+*.ptau
+*.sym
+*.jsonl
