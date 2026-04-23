@@ -44,4 +44,8 @@ contract MockToken {
         balanceOf[to] += amount;
         emit Transfer(from, to, amount);
     }
+
+    // Fallback functions to silently ignore MetaMask background probes (eth_calls)
+    fallback() external payable {}
+    receive() external payable {}
 }

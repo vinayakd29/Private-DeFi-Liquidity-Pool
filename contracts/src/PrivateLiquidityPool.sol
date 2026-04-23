@@ -122,4 +122,8 @@ contract PrivateLiquidityPool {
         leafCount += 1;
         return currentHash;
     }
+
+    // Fallback functions to silently ignore MetaMask background probes (eth_calls)
+    fallback() external payable {}
+    receive() external payable {}
 }

@@ -414,7 +414,6 @@ export function App() {
       <header className="app-header">
         <h1>
           Private DeFi Liquidity Pool
-          <span className="badge">Capstone UI</span>
         </h1>
         <p>
           Deposits, in-browser Groth16 withdrawal proofs, relayer submission, optional balance privacy, and gas
