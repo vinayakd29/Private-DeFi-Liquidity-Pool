@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Test Results - 100 Nodes</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; padding: 2rem; }
+        .chart-container { background: #1e293b; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        h1 { text-align: center; color: #38bdf8; }
+        p.summary { text-align: center; color: #94a3b8; margin-bottom: 2rem; }
+    </style>
+</head>
+<body>
+
+    <h1>100 Nodes Load Test Results</h1>
+    <p class="summary">Privacy-Preserving DeFi Liquidity Pool</p>
+
+    <div class="chart-container">
+        <canvas id="gasChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="timeChart"></canvas>
+    </div>
+
+    <script>
+        async function loadData() {
+            // Using a fetch request to read the local CSV.
+            // Note: This requires the page to be served via a local server (e.g., using live server or python -m http.server)
+            const response = await fetch('load_test_results.csv');
+            const data = await response.text();
+
+            const rows = data.trim().split('\n').slice(1); // skip header
+            
+            const labels = [];
+            const gasUsed = [];
+            const timeMs = [];
+
+            rows.forEach(row => {
+                const cols = row.split(',');
+                labels.push('Node ' + cols[0]);
+                gasUsed.push(parseInt(cols[1], 10));
+                timeMs.push(parseInt(cols[2], 10));
+            });
+
+            createGasChart(labels, gasUsed);
+            createTimeChart(labels, timeMs);
+        }
+
+        function createGasChart(labels, data) {
+            const ctx = document.getElementById('gasChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Gas Used per Deposit',
+                        data: data,
+                        borderColor: '#38bdf8',
+                        backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                        borderWidth: 2,
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { title: { display: true, text: 'Gas Units', color: '#94a3b8' }, ticks: { color: '#94a3b8' } },
+                        x: { ticks: { color: '#94a3b8', maxTicksLimit: 20 } }
+                    },
+                    plugins: { legend: { labels: { color: '#f8fafc' } } }
+                }
+            });
+        }
+
+        function createTimeChart(labels, data) {
+            const ctx = document.getElementById('timeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Deposit Latency (ms)',
+                        data: data,
+                        backgroundColor: '#10b981',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { title: { display: true, text: 'Time (ms)', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, beginAtZero: true },
+                        x: { ticks: { color: '#94a3b8', maxTicksLimit: 20 } }
+                    },
+                    plugins: { legend: { labels: { color: '#f8fafc' } } }
+                }
+            });
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

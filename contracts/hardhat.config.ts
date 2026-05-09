@@ -13,6 +13,11 @@ const config: HardhatUserConfig = {
     }
   },
   networks: {
+    hardhat: {
+      accounts: {
+        count: 120
+      }
+    },
     sepolia: {
       url: process.env.SEPOLIA_RPC_URL || "",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
